@@ -46,17 +46,17 @@ export default function HomePage() {
         body: JSON.stringify({ text }),
       });
 
+      const response = await res.json();
+
       if (!res.ok) {
-        throw new Error(`API Error: ${res.status}`);
+        throw new Error(response.output);
       }
 
-      const data = await res.json();
+      const data = response.output;
 
-      const { content } = data.output;
-
-      setResponse(content);
+      setResponse(data);
     } catch (error) {
-      toast.error("Error fetching data");
+      toast.error(error.message);
     } finally {
       setLoading(false);
     }
