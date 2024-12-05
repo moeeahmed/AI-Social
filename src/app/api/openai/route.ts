@@ -1,22 +1,19 @@
 import { NextResponse } from "next/server";
 import OpenAI from "openai";
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
-
 export async function POST(req: Request) {
-  if (!process.env.OPENAI_API_KEY)
+  //Check if API is in env file
+  if (!process.env.OPENAI_API_KEY) {
     return NextResponse.json(
-      { output: "An error occurred while processing your request." },
+      { output: "Missing OpenAI API key" },
       { status: 500 }
     );
-
-  console.log(process.env.OPENAI_API_KEY);
+  }
 
   try {
     const prompt = await req.json();
 
+    //Check if the prompt has been passed
     if (!prompt || !prompt.text) {
       return NextResponse.json(
         { output: "Invalid request: Missing prompt text." },
@@ -24,7 +21,9 @@ export async function POST(req: Request) {
       );
     }
 
-    const response = await openai.chat.completions.create({
+    const response = await new OpenAI({
+      apiKey: process.env.OPENAI_API_KEY,
+    }).chat.completions.create({
       model: "gpt-4",
       messages: [
         {
@@ -41,6 +40,7 @@ export async function POST(req: Request) {
 
     const theResponse = response.choices[0].message.content;
 
+    //In the case where there is no response from API
     if (!theResponse) {
       return NextResponse.json({ output: "No results found" }, { status: 200 });
     }
