@@ -40,6 +40,9 @@ npm run dev
 ```
 5. Visit the app at <mark>http://localhost:3000</mark>  to start generating posts.
 
+## GUI
+![Screenshot](https://github.com/user-attachments/assets/68a58aa4-5d76-4b07-9dd2-4909b25732f3)
+
 ## Usage
 1. Enter a prompt describing the type of post you want to create.
 2. Choose the tone of the post (e.g., humorous, casual, professional).
