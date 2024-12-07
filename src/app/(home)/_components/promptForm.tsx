@@ -3,7 +3,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 
 type promptFormProps = {
-  text?: string | undefined;
+  text?: string | null;
   onContentChange: (content: string) => void;
 };
 
