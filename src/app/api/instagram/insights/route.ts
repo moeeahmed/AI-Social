@@ -1,18 +1,19 @@
 import { NextResponse } from "next/server";
 
-export async function GET(req: Request) {
+export async function POST(req: Request) {
   //Check if API is in env file
-  if (!process.env.INSTAGRAM_TOKEN) {
+  if (!process.env.FACEBOOK_TOKEN) {
     return NextResponse.json(
-      { output: "Missing Instagram token" },
+      { output: "Missing Facebook token" },
       { status: 500 }
     );
   }
 
-  console.log(req);
+  const request = await req.json();
+  const { mediaId } = request;
 
   try {
-    const url = `https://graph.facebook.com/v21.0/${media}//insights?metric=impressions%2Creach&access_token=${process.env.INSTAGRAM_TOKEN}`;
+    const url = `https://graph.facebook.com/v21.0/${mediaId}/insights?metric=impressions%2Creach&access_token=${process.env.FACEBOOK_TOKEN}`;
 
     const response = await fetch(url);
 
@@ -23,7 +24,13 @@ export async function GET(req: Request) {
       return NextResponse.json({ data: "No results found" }, { status: 200 });
     }
 
-    return NextResponse.json({ data: theResponse.data }, { status: 200 });
+    return NextResponse.json(
+      {
+        impressions: { ...theResponse.data["0"] },
+        reach: { ...theResponse.data["1"] },
+      },
+      { status: 200 }
+    );
   } catch (error) {
     console.error("Error processing request:", error);
 
