@@ -50,9 +50,7 @@ const CaptionsGen = ({}) => {
         throw new Error(response.output);
       }
 
-      const data = response.output;
-
-      setResponse(data);
+      setResponse(response.data);
     } catch (error) {
       if (error instanceof Error) {
         toast.error(error.message);

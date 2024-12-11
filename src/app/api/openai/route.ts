@@ -42,15 +42,15 @@ export async function POST(req: Request) {
 
     //In the case where there is no response from API
     if (!theResponse) {
-      return NextResponse.json({ output: "No results found" }, { status: 200 });
+      return NextResponse.json({ data: "No results found" }, { status: 200 });
     }
 
-    return NextResponse.json({ output: theResponse }, { status: 200 });
+    return NextResponse.json({ data: theResponse }, { status: 200 });
   } catch (error) {
     console.error("Error processing request:", error);
 
     return NextResponse.json(
-      { output: "An error occurred while processing your request." },
+      { data: "An error occurred while processing your request." },
       { status: 500 }
     );
   }
