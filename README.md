@@ -38,7 +38,7 @@ OPENAI_API_KEY=your_openai_api_key
 ```bash
 npm run dev
 ```
-5. Visit the app at <mark>http://localhost:3000</mark>  to start generating posts.
+5. Visit the app at `http://localhost:3000`  to start generating posts.
 
 ## GUI
 ![Screenshot](https://github.com/user-attachments/assets/68a58aa4-5d76-4b07-9dd2-4909b25732f3)
@@ -80,7 +80,7 @@ In addition to the Instagram API, you may need to use the Facebook Graph API. He
 5. **Send API Requests:** Use the access token to make requests to Facebook Graph API endpoints. For example:
 ```curl
 curl -i -X GET \
-"https://graph.facebook.com/v21.0/{page_id}/insights?metric=page_impressions&access_token=YourAccessToken"
+"https://graph.facebook.com/v21.0/{page_id}/insights?metric=page_impressions&access_token={access_token}"
 ```
 ### Additional Notes
 
@@ -90,6 +90,35 @@ curl -i -X GET \
 
 **Access Reviews:** If your app requires advanced access, you will need to submit it for review by Facebook to ensure compliance with their policies.
 
+## API Calls
+
+### Getting Instagram account overview
+
+```curl
+curl -i -X GET \
+"https://graph.instagram.com/v21.0/${user_id}
+?fields=id,user_id,username,name,account_type,profile_picture_url,followers_count,follows_count,media_count
+&access_token={access_token}"
+```
+1. Endpoint: https://graph.instagram.com/v21.0/ is the base endpoint for the Instagram Graph API.
+
+2. Account Identifier: Replace `{user_id}` with the Instagram account ID to specify which account's data you want to retrieve or use `/me` which get the account from the token.
+
+3. Fields: The fields query parameter defines which specific data points you want to fetch. In this case, the API call requests:
+
+| Fields        | Description   | 
+| ------------- |-------------|
+| id     | Instagram account's unique ID | 
+| user_id      | User's unique ID in the system      | 
+| username | Instagram username                                | 
+| name | Name associated with the account (if available)      |      
+| account_type | Type of account (e.g., personal or business)  | 
+| profile_picture_url | URL of the profile picture            |  
+| followers_count | Number of followers the account has      |  
+| follows_count | Number of accounts the user is following      |  
+| media_count | Number of media items the account has posted      | 
+
+### Getting Insights overview
 
 ## Acknowledgements
 - Built using the powerful OpenAI GPT API
